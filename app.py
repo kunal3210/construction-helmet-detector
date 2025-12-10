@@ -54,9 +54,10 @@ def main():
                            help="Maximum number of detections per image")
     
     st.sidebar.markdown("---")
-    st.sidebar.success("✓ Using Construction Helmet Detection Model")
-    st.sidebar.info("Model: sharathhhhh/safetyHelmet-detection-yolov8 (FREE)")
-    st.sidebar.markdown("**Detects:** with_helmet, without_helmet")
+    st.sidebar.success("✓ Using PPE Detection Model (Enhanced)")
+    st.sidebar.info("Model: hafizqaim/Workspace-Safety-Detection")
+    st.sidebar.markdown("**Accuracy:** 86% for helmets, 73.5% mAP50")
+    st.sidebar.markdown("**Detects:** Helmets, Vests, and other PPE")
 
     # Main Content
     st.title("👷 Construction Helmet Detection System")

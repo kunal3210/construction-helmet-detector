@@ -1,20 +1,25 @@
 # Quick Start Guide
 
-## Installation (2 minutes)
+## Installation (3 minutes)
 
-1. **Install Python dependencies**:
+1. **Download the model**:
+   - Go to https://github.com/hafizqaim/Workspace-Safety-Detection-using-YOLOv8/releases
+   - Download `best.pt` (~6MB)
+   - Place it in the project root directory
+
+2. **Install Python dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Run the application**:
+3. **Run the application**:
    ```bash
    streamlit run app.py
    ```
 
-3. **Open your browser**:
+4. **Open your browser**:
    - Navigate to `http://localhost:8501`
-   - Model will auto-download on first run (~6MB, takes ~30 seconds)
+   - App loads automatically
 
 ## First Detection (1 minute)
 
@@ -29,13 +34,21 @@
 3. **View results**:
    - See detections on the right
    - Check statistics below
+   - Detects helmets, vests, and other PPE
 
 ## Tips for Best Results
 
-- **Good lighting**: Ensure helmets are clearly visible
+- **Good lighting**: Ensure PPE is clearly visible
 - **Clear view**: Avoid heavy occlusion
-- **Adjust confidence**: Lower to 0.12 if missing helmets
+- **Adjust confidence**: Lower to 0.10-0.12 if missing detections
 - **Increase resolution**: Use 1920 for distant workers
+
+## Model Information
+
+- **Accuracy**: 86% for helmets, 73.5% mAP50 overall
+- **Training**: 23,000+ images from PPE Detection v3 dataset
+- **Detects**: Helmets, vests, and other safety equipment
+- **Source**: 100% FREE, no API keys required
 
 ## Need Help?
 
@@ -44,4 +57,4 @@
 
 ---
 
-**That's it! You're ready to detect helmets.** 🎉
+**That's it! You're ready to detect PPE.** 🎉

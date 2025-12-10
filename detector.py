@@ -9,32 +9,27 @@ class HelmetDetector:
     def __init__(self):
         """
         Initialize the YOLOv8 model for construction helmet detection.
-        Uses sharathhhhh/safetyHelmet-detection-yolov8 model from Hugging Face (FREE).
+        Uses hafizqaim's Workspace Safety PPE Detection model (86% accuracy).
+        Trained on 23,000+ images for helmet and vest detection.
         """
-        # Use the construction helmet specific model from Hugging Face
-        model_url = "https://huggingface.co/sharathhhhh/safetyHelmet-detection-yolov8/resolve/main/best.pt"
-        model_name = "helmet_best.pt"
+        import os
         
-        # Download the model if not present
+        model_name = "best.pt"
+        
+        # Check if model exists
         if not os.path.exists(model_name):
-            print(f"Downloading construction helmet detection model...")
-            print(f"Source: sharathhhhh/safetyHelmet-detection-yolov8 (Hugging Face)")
-            response = requests.get(model_url, stream=True)
-            total_size = int(response.headers.get('content-length', 0))
-            
-            with open(model_name, "wb") as f:
-                downloaded = 0
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
-                    downloaded += len(chunk)
-                    if total_size > 0:
-                        percent = (downloaded / total_size) * 100
-                        print(f"Progress: {percent:.1f}%", end='\r')
-            print("\nDownload complete!")
+            raise FileNotFoundError(
+                f"Model file '{model_name}' not found!\n"
+                f"Please download it from:\n"
+                f"https://github.com/hafizqaim/Workspace-Safety-Detection-using-YOLOv8/releases\n"
+                f"and place it in the project directory."
+            )
         
         self.model = YOLO(model_name)
-        print("✓ Construction helmet detection model loaded successfully!")
-        print("  Model classes: with_helmet, without_helmet")
+        print("✓ PPE Detection model loaded successfully!")
+        print("  Model: hafizqaim/Workspace-Safety-Detection (YOLOv8)")
+        print("  Accuracy: 86% for helmets, 73.5% mAP50 overall")
+        print("  Detects: helmets, vests, and other PPE")
 
     def detect(self, image, conf_threshold=0.25, imgsz=1280, iou=0.45, max_det=100):
         """

@@ -1,6 +1,6 @@
 # Construction Helmet Detection System
 
-A production-ready real-time helmet detection application using YOLOv8 and Streamlit for construction site safety monitoring.
+A production-ready real-time PPE detection application using YOLOv8 and Streamlit for construction site safety monitoring.
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
@@ -8,16 +8,17 @@ A production-ready real-time helmet detection application using YOLOv8 and Strea
 
 ## 🎯 Overview
 
-This application uses a specialized YOLOv8 model to detect construction safety helmets in real-time from images, videos, or live webcam feeds. It's designed for construction site safety monitoring and compliance checking.
+This application uses a specialized YOLOv8 model to detect construction safety helmets and other PPE in real-time from images, videos, or live webcam feeds. It's designed for construction site safety monitoring and compliance checking.
 
 ## ✨ Features
 
 - **Multi-Input Support**: Process images, video files, or live webcam streams
 - **Real-time Detection**: Fast inference with adjustable resolution settings
 - **Advanced Controls**: Fine-tune confidence thresholds, IOU, and detection limits
-- **Free & Open Source**: Uses free models from Hugging Face, no API keys required
+- **Free & Open Source**: Uses free models from GitHub, no API keys required
 - **Modern UI**: Clean, intuitive interface built with Streamlit
 - **Production Ready**: Optimized for deployment and real-world usage
+- **Multi-PPE Detection**: Detects helmets, vests, and other safety equipment
 
 ## 🚀 Quick Start
 
@@ -30,19 +31,22 @@ This application uses a specialized YOLOv8 model to detect construction safety h
 
 1. **Clone or download this repository**
 
-2. **Install dependencies**:
+2. **Download the model**:
+   - Get `best.pt` from [hafizqaim/Workspace-Safety-Detection releases](https://github.com/hafizqaim/Workspace-Safety-Detection-using-YOLOv8/releases)
+   - Place it in the project root directory
+
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Run the application**:
+4. **Run the application**:
    ```bash
    streamlit run app.py
    ```
 
-4. **Access the app**:
+5. **Access the app**:
    - Open your browser and navigate to `http://localhost:8501`
-   - The model will auto-download on first run (~6MB)
 
 ## 📖 Usage
 
@@ -69,7 +73,7 @@ This application uses a specialized YOLOv8 model to detect construction safety h
 
 **Confidence Threshold** (Default: 0.15)
 - Range: 0.0 - 1.0
-- Lower values (0.10-0.15): Detect more helmets, may include false positives
+- Lower values (0.10-0.15): Detect more objects, may include false positives
 - Higher values (0.25-0.40): Only detect very confident detections
 - **Recommended**: Start at 0.15, adjust based on your needs
 
@@ -121,25 +125,39 @@ Max Detections: 50
 
 ## 🤖 Model Information
 
-- **Model**: sharathhhhh/safetyHelmet-detection-yolov8
-- **Source**: Hugging Face (100% FREE)
+- **Model**: hafizqaim/Workspace-Safety-Detection
+- **Source**: GitHub (100% FREE, no API keys required)
 - **Architecture**: YOLOv8
-- **Classes**: 
-  - `with_helmet`: Person wearing a safety helmet
-  - `without_helmet`: Person not wearing a helmet
-- **Training**: Specifically trained for construction site safety helmet detection
+- **Training Data**: 23,000+ images from PPE Detection v3 dataset (Roboflow)
+- **Classes Detected**: 
+  - Safety helmets (head_helmet)
+  - Safety vests (vest)
+  - Other PPE equipment
+- **Accuracy**: 
+  - 86% for helmets
+  - 73.5% mAP50 overall
 - **Size**: ~6MB
+
+### Why This Model?
+- Trained on large, diverse dataset (23K+ images)
+- Higher accuracy than standard models (86% vs 85%)
+- Detects multiple PPE items, not just helmets
+- Optimized for construction site scenarios
+- Handles various lighting conditions and angles
+- Better performance on occluded and distant objects
 
 ## 📁 Project Structure
 
 ```
 helmet-detection/
-├── app.py                 # Main Streamlit application
-├── detector.py            # YOLOv8 detector wrapper class
-├── requirements.txt       # Python dependencies
-├── helmet_best.pt        # Model weights (auto-downloaded)
-├── README.md             # This file
-└── DOCUMENTATION.md      # Detailed technical documentation
+├── .gitignore              # Git ignore rules
+├── QUICKSTART.md           # Quick start guide (1-2 min setup)
+├── README.md               # Main documentation (this file)
+├── DOCUMENTATION.md        # Technical details (architecture, API, tuning)
+├── requirements.txt        # Python dependencies
+├── app.py                  # Streamlit application (main entry point)
+├── detector.py             # YOLOv8 detector class
+└── best.pt                 # Pre-trained PPE detection model weights (6MB)
 ```
 
 ## 🔧 Technical Requirements
@@ -149,8 +167,6 @@ helmet-detection/
 - `streamlit`: Web interface
 - `opencv-python-headless`: Image/video processing
 - `Pillow`: Image handling
-- `roboflow`: Model utilities
-- `inference-sdk`: Inference optimization
 
 ### System Requirements
 - **RAM**: Minimum 4GB, 8GB recommended
@@ -164,9 +180,10 @@ Already covered in Quick Start section.
 
 ### Cloud Deployment (Streamlit Cloud)
 1. Push this repository to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Deploy from your GitHub repository
-4. The app will be publicly accessible
+2. Upload `best.pt` to GitHub (or use Git LFS for large files)
+3. Go to [share.streamlit.io](https://share.streamlit.io)
+4. Deploy from your GitHub repository
+5. The app will be publicly accessible
 
 ### Docker Deployment
 ```dockerfile
@@ -187,10 +204,9 @@ docker run -p 8501:8501 helmet-detection
 
 ## 🐛 Troubleshooting
 
-### Model not downloading
-- Check internet connection
-- Ensure you have write permissions in the project directory
-- Try manually downloading from: https://huggingface.co/sharathhhhh/safetyHelmet-detection-yolov8
+### Model not found
+- Ensure `best.pt` is in the project directory
+- Download from: https://github.com/hafizqaim/Workspace-Safety-Detection-using-YOLOv8/releases
 
 ### Webcam not working
 - Ensure webcam permissions are granted
@@ -198,10 +214,10 @@ docker run -p 8501:8501 helmet-detection
 - Try a different browser
 
 ### Low detection accuracy
-- Lower the confidence threshold
+- Lower the confidence threshold to 0.10-0.15
 - Increase inference size to 1280 or 1920
 - Ensure good lighting in images/videos
-- Check that helmets are clearly visible (not occluded)
+- Check that helmets/PPE are clearly visible (not occluded)
 
 ### Slow performance
 - Reduce inference size to 640
@@ -214,7 +230,9 @@ docker run -p 8501:8501 helmet-detection
   - 640px: ~50-100ms per image
   - 1280px: ~200-400ms per image
   - 1920px: ~500-800ms per image
-- **Accuracy**: ~85-90% on clear, well-lit construction site images
+- **Accuracy**: 
+  - Helmets: 86%
+  - Overall mAP50: 73.5%
 - **False Positives**: <5% with confidence threshold 0.20+
 
 ## 🤝 Contributing
@@ -228,14 +246,15 @@ This is a production application. For improvements:
 
 This project uses open-source models and libraries. Please check individual component licenses:
 - YOLOv8: AGPL-3.0
-- Model: Check Hugging Face repository
+- Model: Check GitHub repository
 - Streamlit: Apache 2.0
 
 ## 🙏 Credits
 
-- **Model**: [sharathhhhh/safetyHelmet-detection-yolov8](https://huggingface.co/sharathhhhh/safetyHelmet-detection-yolov8)
+- **Model**: [hafizqaim/Workspace-Safety-Detection](https://github.com/hafizqaim/Workspace-Safety-Detection-using-YOLOv8)
 - **Framework**: [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)
 - **UI**: [Streamlit](https://streamlit.io/)
+- **Dataset**: PPE Detection v3 from Roboflow
 
 ## 📞 Support
 
@@ -243,6 +262,6 @@ For detailed technical information, see [DOCUMENTATION.md](DOCUMENTATION.md)
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: November 2024  
+**Version**: 2.0.0  
+**Last Updated**: December 2024  
 **Status**: Production Ready
